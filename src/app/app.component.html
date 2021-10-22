@@ -1,0 +1,60 @@
+<div>
+  <h4 (click)="toggles[0] = !toggles[0]" style="cursor: pointer;">
+    Задание №1
+    <span *ngIf="toggles[0]; else firstToggle">🔺</span>
+    <ng-template #firstToggle>🔻</ng-template>
+  </h4>
+
+  <div *ngIf="toggles[0]">
+    <button (click)="visible = !visible" style="margin-bottom: 10px;">
+      Toggle 3 tab
+    </button>
+
+    <tabs>
+      <tab>
+        <tab-title>
+          Title 1
+        </tab-title>
+        <tab-content>
+          <i>Content</i> 1
+        </tab-content>
+      </tab>
+      <tab>
+        <tab-title>
+          <i>Title</i> 2
+        </tab-title>
+        <tab-content>
+          Content 2
+        </tab-content>
+      </tab>
+      <tab *ngIf="visible">
+        <tab-title>
+          Title 3
+        </tab-title>
+        <tab-content>
+          Content 3
+        </tab-content>
+      </tab>
+    </tabs>
+
+    <br>
+    <button (click)="tabs.push((tabs.slice(-1)[0] || 0) + 1)" style="margin-bottom: 10px;">Add tab</button>
+    <button (click)="tabs.splice(-1,1)" style="margin-bottom: 10px;">Remove tab</button>
+
+
+    <tabs>
+      <tab *ngFor="let el of tabs">
+        <tab-title>
+          Title {{el}}
+        </tab-title>
+        <tab-content>
+          <i>Content</i> {{el}}
+        </tab-content>
+      </tab>
+    </tabs>
+
+    <div>{{tabs | json}}</div>
+
+    <hr>
+  </div>
+</div>
