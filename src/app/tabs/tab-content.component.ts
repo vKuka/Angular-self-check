@@ -13,10 +13,3 @@ export class TabContentComponent {
   @ViewChild(TemplateRef, {static: true})
   public content!: TemplateRef<any>;
 }
-
-// @Directive({
-//   selector: 'tab-content',
-// })
-// export class TabContentComponent{
-//   constructor(public content: ElementRef) { }
-// }

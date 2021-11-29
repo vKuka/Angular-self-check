@@ -1,15 +1,18 @@
-import { Directive, HostListener, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { Subject } from 'rxjs';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { IConfig, IfViewportSizeConfig } from './config.service';
-import { IfViewportSizeService } from './if-viewport-size.service';
+import {Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {IConfig, IfViewportSizeConfig} from './config.service';
+import {IfViewportSizeService} from './if-viewport-size.service';
 
 @Directive({
   selector: '[ifViewportSize]',
 })
 export class IfViewportSizeDirective implements OnInit, OnDestroy {
-  @Input() ifViewportSize!: keyof IConfig | 'small';
-  @Input() ifViewportSizeSize!: number;
+  @Input()
+  ifViewportSize!: keyof IConfig | 'small';
+  @Input()
+  ifViewportSizeSize!: number;
+
   private hasView = false;
   destroy$ = new Subject();
 

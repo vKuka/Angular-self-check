@@ -1,0 +1,31 @@
+.tabs {
+  border: 1px solid #ccc;
+
+  &__container {
+    display: flex;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ccc;
+    overflow-x: auto;
+
+  }
+
+  &__button {
+    border: none;
+    padding: 7px 15px;
+    flex-shrink: 0;
+
+    &_active {
+      background-color: #ccc;
+    }
+    &:hover {
+      background-color: #ddd;
+    }
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &__content {
+    padding: 6px 12px;
+  }
+}

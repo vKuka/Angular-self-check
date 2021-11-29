@@ -6,12 +6,9 @@ import { TabTitleComponent } from './tab-title.component';
   selector: 'tab',
 })
 export class TabComponent {
-
   @ContentChild(TabTitleComponent, { static: true })
   public tabTitle!: TabTitleComponent;
 
   @ContentChild(TabContentComponent, { static: true })
   public tabContent!: TabContentComponent;
 }
-
-

@@ -6,28 +6,30 @@ import { map, startWith } from "rxjs/operators";
 @Component({
   selector: 'tabs',
   template: `
-  <div>
-    <div style="display: flex;">
-      <button 
-        *ngFor="let tab of list$ | async" 
-        (click)="selectTab(tab)"
-        [ngStyle]="{
-          color: activeTab === tab ? 'red' : 'black'
-        }"
-        type="button"
+    <div *ngIf="(list$ | async)?.length" class="tabs">
+      <div class="tabs__container">
+        <button
+          *ngFor="let tab of list$ | async"
+          (click)="selectTab(tab)"
+          class="tabs__button"
+          [ngClass]="{'tabs__button_active': activeTab === tab}"
+          type="button"
+        >
+          <span *ngTemplateOutlet="tab.tabTitle.title"></span>
+        </button>
+      </div>
+      <div
+        *ngIf="activeTab"
+        class="tabs__content"
       >
-        <span *ngTemplateOutlet="tab.tabTitle.title"></span>
-      </button>
+        <span *ngTemplateOutlet="activeTab.tabContent.content"></span>
+      </div>
     </div>
-    <div *ngIf="activeTab">
-      <span *ngTemplateOutlet="activeTab.tabContent.content"></span>
-    </div>
-  </div>
   `,
+  styleUrls: ['./tabs.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsComponent implements AfterContentInit, AfterContentChecked {
-
   @ContentChildren(TabComponent)
   tabList!: QueryList<TabComponent>;
 
@@ -36,19 +38,17 @@ export class TabsComponent implements AfterContentInit, AfterContentChecked {
   activeTab!: TabComponent;
   ngAfterContentInit() {
     this.list$ = this.tabList.changes
-    .pipe(
+      .pipe(
         startWith([]),
-        map(() => {
-          // debugger
-          return this.tabList.toArray()}),
+        map(() => this.tabList.toArray()),
       );
   }
 
   ngAfterContentChecked() {
-    const hasActibeTab = this.activeTab && this.tabList.find((tab: TabComponent) => {
+    const hasActiveTab = this.activeTab && this.tabList.find((tab: TabComponent) => {
       return tab === this.activeTab;
     });
-    if (!hasActibeTab) {
+    if (!hasActiveTab) {
       this.activeTab = this.tabList.first;
     }
   }

@@ -1,14 +1,12 @@
-<div>
-  <h4 (click)="toggles[0] = !toggles[0]" style="cursor: pointer;">
+<div class="task">
+  <h4 class="task__toggle-header" (click)="toggleAccordionTask(0)">
     Задание №1
-    <span *ngIf="toggles[0]; else firstToggle">🔺</span>
+    <span *ngIf="accordions[0]; else firstToggle">🔺</span>
     <ng-template #firstToggle>🔻</ng-template>
   </h4>
 
-  <div *ngIf="toggles[0]">
-    <button (click)="visible = !visible" style="margin-bottom: 10px;">
-      Toggle 3 tab
-    </button>
+  <div *ngIf="accordions[0]">
+    <button class="task__button task__button_margin-bottom task__button_margin-right" (click)="toggleTabVisibility()">Toggle 3 tab</button>
 
     <tabs>
       <tab>
@@ -17,6 +15,7 @@
         </tab-title>
         <tab-content>
           <i>Content</i> 1
+          <br>
         </tab-content>
       </tab>
       <tab>
@@ -27,7 +26,7 @@
           Content 2
         </tab-content>
       </tab>
-      <tab *ngIf="visible">
+      <tab *ngIf="isTabVisible">
         <tab-title>
           Title 3
         </tab-title>
@@ -38,9 +37,8 @@
     </tabs>
 
     <br>
-    <button (click)="tabs.push((tabs.slice(-1)[0] || 0) + 1)" style="margin-bottom: 10px;">Add tab</button>
-    <button (click)="tabs.splice(-1,1)" style="margin-bottom: 10px;">Remove tab</button>
-
+    <button class="task__button task__button_margin-bottom task__button_margin-right" (click)="addTab()">Add tab</button>
+    <button class="task__button task__button_margin-bottom" (click)="removeTab()">Remove tab</button>
 
     <tabs>
       <tab *ngFor="let el of tabs">
@@ -52,9 +50,20 @@
         </tab-content>
       </tab>
     </tabs>
+  </div>
+</div>
 
-    <div>{{tabs | json}}</div>
+<div class="task">
+  <h4 class="task__toggle-header" (click)="toggleAccordionTask(1)">
+    Задание №2
+    <span *ngIf="accordions[1]; else secondToggle">🔺</span>
+    <ng-template #secondToggle>🔻</ng-template>
+  </h4>
 
-    <hr>
+  <div *ngIf="accordions[1]">
+    <div *ifViewportSize="'small'">#1 Small</div>
+    <div *ifViewportSize="'medium'">#2 Medium</div>
+    <div *ifViewportSize="'medium'; size: 300">#2 Medium 300</div>
+    <div *ifViewportSize="'large'">#3 Large</div>
   </div>
 </div>
