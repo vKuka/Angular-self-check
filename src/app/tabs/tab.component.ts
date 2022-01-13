@@ -1,4 +1,4 @@
-import { ContentChild, Directive } from '@angular/core';
+import { ContentChild, Directive, Input } from '@angular/core';
 import { TabContentComponent } from './tab-content.component';
 import { TabTitleComponent } from './tab-title.component';
 
@@ -6,6 +6,9 @@ import { TabTitleComponent } from './tab-title.component';
   selector: 'tab',
 })
 export class TabComponent {
+  @Input()
+  public disabled: boolean = false;
+
   @ContentChild(TabTitleComponent, { static: true })
   public tabTitle!: TabTitleComponent;
 

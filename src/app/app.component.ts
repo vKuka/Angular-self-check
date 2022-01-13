@@ -12,10 +12,15 @@ export class AppComponent {
     true,
   ];
   isTabVisible: boolean = false;
+  isTabDisabled: boolean = true;
   tabs: number[] = [1, 2];
 
   addTab(): void {
-    this.tabs.push((this.tabs.slice(-1)[0] || 0) + 1)
+    this.tabs.push((this.tabs.slice(-1)[0] || 0) + 1);
+  }
+
+  toggleTabDisability(): void {
+    this.isTabDisabled = !this.isTabDisabled;
   }
 
   toggleAccordionTask(index: number) {
@@ -27,6 +32,6 @@ export class AppComponent {
   }
 
   removeTab(): void {
-    this.tabs.splice(-1,1)
+    this.tabs.splice(-1, 1);
   }
 }

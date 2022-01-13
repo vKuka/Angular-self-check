@@ -1,7 +1,14 @@
-import { AfterContentChecked, AfterContentInit, ChangeDetectionStrategy, Component, ContentChildren, QueryList } from '@angular/core';
-import { Observable } from 'rxjs';
-import { TabComponent } from './tab.component';
-import { map, startWith } from "rxjs/operators";
+import {
+  AfterContentChecked,
+  AfterContentInit,
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  QueryList
+} from '@angular/core';
+import {Observable} from 'rxjs';
+import {TabComponent} from './tab.component';
+import {map, startWith} from "rxjs/operators";
 
 @Component({
   selector: 'tabs',
@@ -13,6 +20,7 @@ import { map, startWith } from "rxjs/operators";
           (click)="selectTab(tab)"
           class="tabs__button"
           [ngClass]="{'tabs__button_active': activeTab === tab}"
+          [disabled]="tab.disabled"
           type="button"
         >
           <span *ngTemplateOutlet="tab.tabTitle.title"></span>
@@ -36,6 +44,10 @@ export class TabsComponent implements AfterContentInit, AfterContentChecked {
   list$!: Observable<TabComponent[]>;
 
   activeTab!: TabComponent;
+
+  constructor(private readonly cdr: ChangeDetectorRef) {
+  }
+
   ngAfterContentInit() {
     this.list$ = this.tabList.changes
       .pipe(
@@ -50,7 +62,10 @@ export class TabsComponent implements AfterContentInit, AfterContentChecked {
     });
     if (!hasActiveTab) {
       this.activeTab = this.tabList.first;
+    } else if (hasActiveTab?.disabled) {
+      this.activeTab = this.firstNonDisabledTab;
     }
+    this.cdr.markForCheck()
   }
 
   public selectTab(tab: TabComponent): void {
@@ -59,5 +74,14 @@ export class TabsComponent implements AfterContentInit, AfterContentChecked {
     }
 
     this.activeTab = tab;
+  }
+
+  get firstNonDisabledTab(): TabComponent {
+    for (let tab of this.tabList) {
+      if (!tab.disabled) {
+        return tab;
+      }
+    }
+    return this.activeTab;
   }
 }

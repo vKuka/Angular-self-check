@@ -6,7 +6,12 @@
   </h4>
 
   <div *ngIf="accordions[0]">
-    <button class="task__button task__button_margin-bottom task__button_margin-right" (click)="toggleTabVisibility()">Toggle 3 tab</button>
+    <button class="task__button task__button_margin-bottom task__button_margin-right" (click)="toggleTabVisibility()">
+      Toggle 3 tab
+    </button>
+    <button class="task__button task__button_margin-bottom" (click)="toggleTabDisability()">Toggle disability of the
+      second tab
+    </button>
 
     <tabs>
       <tab>
@@ -18,7 +23,7 @@
           <br>
         </tab-content>
       </tab>
-      <tab>
+      <tab [disabled]="isTabDisabled">
         <tab-title>
           <i>Title</i> 2
         </tab-title>
@@ -37,8 +42,12 @@
     </tabs>
 
     <br>
-    <button class="task__button task__button_margin-bottom task__button_margin-right" (click)="addTab()">Add tab</button>
-    <button class="task__button task__button_margin-bottom" (click)="removeTab()">Remove tab</button>
+    <button class="task__button task__button_margin-bottom task__button_margin-right" (click)="addTab()">
+      Add tab
+    </button>
+    <button class="task__button task__button_margin-bottom" (click)="removeTab()">
+      Remove tab
+    </button>
 
     <tabs>
       <tab *ngFor="let el of tabs">
